@@ -2,7 +2,7 @@
     "name": "vscode-php-cs-fixer",
     "displayName": "vscode-php-cs-fixer",
     "description": "Support for php-cs-fixer in Visual Studio Code",
-    "version": "0.0.1",
+    "version": "0.0.2",
     "publisher": "fterrag",
     "engines": {
         "vscode": "^1.18.0"
@@ -30,24 +30,21 @@
                     "default": "php-cs-fixer",
                     "description": "The path to the php-cs-fixer tool"
                 },
-
                 "vscode-php-cs-fixer.useCache": {
                     "type": "boolean",
                     "default": false,
                     "description": "Use a cache file when fixing files (--using-cache)"
                 },
-
                 "vscode-php-cs-fixer.rules": {
                     "type": "string",
                     "default": "@PSR1,@PSR2,@Symfony,-yoda_style",
                     "description": "Rules to use when fixing files (--rules)"
                 },
-
                 "vscode-php-cs-fixer.fixOnSave": {
                     "type": "boolean",
                     "default": true,
                     "description": "Runs fix command on save"
-               }
+                }
             }
         }
     },
