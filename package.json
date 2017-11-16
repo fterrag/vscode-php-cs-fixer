@@ -2,10 +2,14 @@
     "name": "vscode-php-cs-fixer",
     "displayName": "vscode-php-cs-fixer",
     "description": "Support for php-cs-fixer in Visual Studio Code",
-    "version": "0.0.3",
+    "version": "0.0.4",
     "publisher": "fterrag",
     "engines": {
         "vscode": "^1.18.0"
+    },
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/fterrag/vscode-php-cs-fixer"
     },
     "categories": [
         "Formatters"
