@@ -4,13 +4,11 @@ This extension adds support for running `php-cs-fixer fix` on PHP files in Visua
 
 ## Install
 
-Download [php-cs-fixer](https://github.com/FriendsOfPHP/PHP-CS-Fixer) and move it to a directory in your `PATH`. For example:
+If not already installed, download [php-cs-fixer](https://github.com/FriendsOfPHP/PHP-CS-Fixer) and move it to a directory in your `PATH`. For example:
 ```bash
-curl -L http://cs.sensiolabs.org/download/php-cs-fixer-v2.phar -o php-cs-fixer
-```
-
-```bash
-mv php-cs-fixer /usr/local/bin/
+$ curl -L http://cs.sensiolabs.org/download/php-cs-fixer-v2.phar -o php-cs-fixer
+$ chmod +x php-cs-fixer
+$ mv php-cs-fixer /usr/local/bin/
 ```
 
 If you don't want `php-cs-fixer` in your `PATH`, set the `vscode-php-cs-fixer.toolPath` setting to the path of `php-cs-fixer`.
