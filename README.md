@@ -2,6 +2,8 @@
 
 This extension adds support for running `php-cs-fixer fix` on PHP files in Visual Studio Code.
 
+![demo](demo.gif)
+
 ## Install
 
 If not already installed, download [php-cs-fixer](https://github.com/FriendsOfPHP/PHP-CS-Fixer) and move it to a directory in your `PATH`. For example:
