@@ -21,5 +21,6 @@ This extension contributes the following settings:
 
 * `vscode-php-cs-fixer.toolPath`: The path to the php-cs-fixer tool (default: "php-cs-fixer")
 * `vscode-php-cs-fixer.useCache`: Use a cache file when fixing files (--using-cache) (default: false)
+* `vscode-php-cs-fixer.config`: Path to a .php_cs file (--config) (default: "")
 * `vscode-php-cs-fixer.rules`: Rules to use when fixing files (--rules) (default: "@PSR1,@PSR2,@Symfony,-yoda_style")
 * `vscode-php-cs-fixer.fixOnSave`: Runs fix command on save (default: true)

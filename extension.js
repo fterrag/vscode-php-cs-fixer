@@ -16,9 +16,14 @@ function fixDocument(document) {
         args.push('--using-cache=no');
     }
 
-    let rules = getConfig('rules');
-    if (rules) {
-        args.push('--rules=' + rules);
+    let config = getConfig('config');
+    if (config) {
+        args.push('--config=' + config)
+    } else {
+        let rules = getConfig('rules');
+        if (rules) {
+            args.push('--rules=' + rules);
+        }
     }
 
     cp.execFile(toolPath, [...args, filename], opts, function (err) {
