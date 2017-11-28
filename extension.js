@@ -12,6 +12,10 @@ function fixDocument(document) {
     let args = ['fix'];
     let opts = { cwd: path.dirname(filename) };
 
+    if (!toolPath) {
+        toolPath = vscode.extensions.getExtension("fterrag.vscode-php-cs-fixer").extensionPath + '/php-cs-fixer';
+    }
+
     if (!getConfig('useCache')) {
         args.push('--using-cache=no');
     }

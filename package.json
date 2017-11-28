@@ -2,7 +2,7 @@
     "name": "vscode-php-cs-fixer",
     "displayName": "vscode-php-cs-fixer",
     "description": "Support for php-cs-fixer in Visual Studio Code",
-    "version": "0.0.7",
+    "version": "0.0.8",
     "publisher": "fterrag",
     "engines": {
         "vscode": "^1.18.0"
@@ -38,7 +38,7 @@
             "properties": {
                 "vscode-php-cs-fixer.toolPath": {
                     "type": "string",
-                    "default": "php-cs-fixer",
+                    "default": "",
                     "description": "The path to the php-cs-fixer tool"
                 },
                 "vscode-php-cs-fixer.useCache": {
