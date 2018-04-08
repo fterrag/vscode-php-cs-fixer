@@ -46,6 +46,11 @@
                     "default": false,
                     "description": "Use a cache file when fixing files (--using-cache)"
                 },
+                "vscode-php-cs-fixer.allowRisky": {
+                    "type": "boolean",
+                    "default": false,
+                    "description": "Are risky fixers allowed (--allow-risky)"
+                },
                 "vscode-php-cs-fixer.config": {
                     "type": "string",
                     "default": "",

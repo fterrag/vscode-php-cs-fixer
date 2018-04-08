@@ -20,6 +20,10 @@ function fixDocument(document) {
         args.push('--using-cache=no');
     }
 
+    if (getConfig('allowRisky')) {
+        args.push('--allow-risky=yes');
+    }
+
     let config = getConfig('config');
     if (config) {
         args.push('--config=' + config)
