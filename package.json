@@ -2,7 +2,7 @@
     "name": "vscode-php-cs-fixer",
     "displayName": "vscode-php-cs-fixer",
     "description": "Support for php-cs-fixer in Visual Studio Code",
-    "version": "0.0.9",
+    "version": "0.1.0",
     "publisher": "fterrag",
     "engines": {
         "vscode": "^1.18.0"

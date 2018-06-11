@@ -6,7 +6,7 @@ This extension adds support for running `php-cs-fixer fix` on PHP files in Visua
 
 ## Getting Started
 
-As long as PHP 5.6+ is installed on your system, the extension should work out of the box.
+As long as PHP 5.6+ is installed on your system and in your PATH, the extension should work out of the box.
 
 If you don't want to use the `php-cs-fixer` that's included with the extension, set the `vscode-php-cs-fixer.toolPath` setting to the path of `php-cs-fixer`.
 

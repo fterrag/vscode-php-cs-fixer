@@ -9,12 +9,15 @@ function fixDocument(document) {
 
     let toolPath = getConfig('toolPath');
     let filename = document.fileName;
-    let args = ['fix'];
+    let args = [];
     let opts = { cwd: path.dirname(filename) };
 
     if (!toolPath) {
         toolPath = vscode.extensions.getExtension("fterrag.vscode-php-cs-fixer").extensionPath + '/php-cs-fixer';
     }
+
+    args.push(toolPath)
+    args.push('fix')
 
     if (!getConfig('useCache')) {
         args.push('--using-cache=no');
@@ -34,7 +37,7 @@ function fixDocument(document) {
         }
     }
 
-    cp.execFile(toolPath, [...args, filename], opts, function (err) {
+    cp.execFile('php', [...args, filename], opts, function (err) {
         if (err && err.code === 'ENOENT') {
             vscode.window.showErrorMessage('Unable to find the php-cs-fixer tool.');
             return;
