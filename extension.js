@@ -1,8 +1,10 @@
 const vscode = require('vscode');
 const path = require('path');
+const fs = require('fs');
+const tmp = require('tmp');
 const cp = require('child_process');
 
-function fixDocument(document) {
+function formatDocument(document) {
     if (document.languageId !== 'php') {
         return;
     }
@@ -13,11 +15,11 @@ function fixDocument(document) {
     let opts = { cwd: path.dirname(filename) };
 
     if (!toolPath) {
-        toolPath = vscode.extensions.getExtension("fterrag.vscode-php-cs-fixer").extensionPath + '/php-cs-fixer';
+        toolPath = vscode.extensions.getExtension('fterrag.vscode-php-cs-fixer').extensionPath + '/php-cs-fixer';
     }
 
-    args.push(toolPath)
-    args.push('fix')
+    args.push(toolPath);
+    args.push('fix');
 
     if (!getConfig('useCache')) {
         args.push('--using-cache=no');
@@ -29,7 +31,7 @@ function fixDocument(document) {
 
     let config = getConfig('config');
     if (config) {
-        args.push('--config=' + config)
+        args.push('--config=' + config);
     } else {
         let rules = getConfig('rules');
         if (rules) {
@@ -37,20 +39,41 @@ function fixDocument(document) {
         }
     }
 
-    cp.execFile('php', [...args, filename], opts, function (err) {
-        if (err && err.code === 'ENOENT') {
-            vscode.window.showErrorMessage('Unable to find the php-cs-fixer tool.');
-            return;
-        }
+    const tmpFile = tmp.fileSync();
+    fs.writeFileSync(tmpFile.name, document.getText(null));
 
-        if (err) {
-            vscode.window.showErrorMessage('There was an error while running php-cs-fixer. Check the Developer Tools console for more information.');
+    // console.log('php-cs-fixer temporary file: ' + tmpFile.name);
 
-            console.log(err);
-            return;
-        }
+    return new Promise(function(resolve) {
+        cp.execFile('php', [...args, tmpFile.name], opts, function (err) {
+            if (err) {
+                tmpFile.removeCallback();
 
-        document.save();
+                if (err.code === 'ENOENT') {
+                    vscode.window.showErrorMessage('Unable to find the php-cs-fixer tool.');
+                    throw err;
+                }
+
+                vscode.window.showErrorMessage('There was an error while running php-cs-fixer. Check the Developer Tools console for more information.');
+                throw err;
+            }
+
+            const text = fs.readFileSync(tmpFile.name, 'utf-8');
+            tmpFile.removeCallback();
+
+            resolve(text);
+        });
+    });
+}
+
+function registerDocumentProvider(document, options) {
+    return new Promise(function(resolve, reject) {
+        formatDocument(document).then(function(text) {
+            const range = new vscode.Range(new vscode.Position(0, 0), document.lineAt(document.lineCount - 1).range.end);
+            resolve([new vscode.TextEdit(range, text)]);
+        }).catch(function(err) {
+            reject();
+        });
     });
 }
 
@@ -60,19 +83,25 @@ function getConfig(key) {
 
 function activate(context) {
     context.subscriptions.push(vscode.commands.registerTextEditorCommand('vscode-php-cs-fixer.fix', function (textEditor) {
-        fixDocument(textEditor.document);
+        vscode.commands.executeCommand('editor.action.formatDocument');
     }));
 
-    vscode.workspace.onDidSaveTextDocument(function (document) {
-        if (!getConfig('fixOnSave')) {
-            return;
+    context.subscriptions.push(vscode.workspace.onWillSaveTextDocument(function(event) {
+        if (event.document.languageId === 'php' && getConfig('fixOnSave') && vscode.workspace.getConfiguration('editor', null).get('formatOnSave') == false) {
+            event.waitUntil(vscode.commands.executeCommand('editor.action.formatDocument'));
         }
+    }));
 
-        fixDocument(document);
-    });
+    context.subscriptions.push(vscode.languages.registerDocumentFormattingEditProvider('php', {
+        provideDocumentFormattingEdits: function(document, options) {
+            return registerDocumentProvider(document, options);
+        }
+    }));
 }
+
 exports.activate = activate;
 
 function deactivate() {
 }
+
 exports.deactivate = deactivate;

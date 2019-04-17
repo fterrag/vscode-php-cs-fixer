@@ -79,5 +79,8 @@
         "eslint": "^4.6.1",
         "@types/node": "^7.0.43",
         "@types/mocha": "^2.2.42"
+    },
+    "dependencies": {
+        "tmp": "^0.1.0"
     }
 }
