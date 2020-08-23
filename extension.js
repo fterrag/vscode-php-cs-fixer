@@ -33,13 +33,16 @@ function formatDocument(document) {
     if (config) {
         // Support config file with relative path
         if (!path.isAbsolute(config)) {
-            let currentPath = path.dirname(opts.cwd);
+            let currentPath = opts.cwd;
+            let triedPaths = [currentPath];
             while (!fs.existsSync(currentPath + path.sep + config)) {
                 let lastPath = currentPath;
                 currentPath = path.dirname(currentPath);
                 if (lastPath == currentPath) {
-                    vscode.window.showErrorMessage(`Unable to find ${config} file.`);
+                    vscode.window.showErrorMessage(`Unable to find ${config} file in ${triedPaths.join(", ")}`);
                     return;
+                } else {
+                    triedPaths.push(currentPath);
                 }
             }
             config = currentPath + path.sep + config;
