@@ -29,6 +29,10 @@ function formatDocument(document) {
         args.push('--allow-risky=yes');
     }
 
+    if (getConfig('intersection')) {
+        args.push('--path-mode=intersection');
+    }
+
     let config = getConfig('config');
     if (config) {
         // Support config file with relative path
