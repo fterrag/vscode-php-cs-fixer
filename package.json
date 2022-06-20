@@ -65,6 +65,11 @@
                     "type": "boolean",
                     "default": true,
                     "description": "Runs fix command on save"
+                },
+                "vscode-php-cs-fixer.intersection": {
+                    "type": "boolean",
+                    "default": false,
+                    "description": "Set path mode to intersection (--pathmode=intersection)"
                 }
             }
         }
